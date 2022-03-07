@@ -1,7 +1,12 @@
 
-chrome.storage.sync.get("count", ({ count }) => {
-  if(!count) count = 0;
-  chrome.storage.sync.set({count: count + 1}), function(value: number) {
-    console.log('Value is set to ' + value);
-  }
+
+chrome.storage.sync.get("visits", ({ visits }) => {
+  if(!visits) visits = []
+  visits.push({
+    url: window.location.href,
+    timestamp: new Date()
+  })
+  chrome.storage.sync.set({
+    visits
+  })
 });

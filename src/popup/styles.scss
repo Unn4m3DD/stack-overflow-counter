@@ -3,6 +3,26 @@
   width: 20rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
+}
+
+.nav-bar {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .nav-item {
+    padding: .4rem;
+    .selected{
+      background-color: #ccc;
+    }
+    &:hover{
+      background-color: #ddd;
+    }
+    &:active{
+      background-color: #eee;
+    }
+  }
 }

@@ -9,8 +9,5 @@
     "sourceMap": true,
     "target": "es6",
     "esModuleInterop": true
-  },
-  "include": [
-    "src/components/index.tsx"
-  ]
+  }
 }
