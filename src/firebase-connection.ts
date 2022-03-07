@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore/lite';
-import { getAuth } from 'firebase/auth';
-
+import { getAuth, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmy_H3DcQ0vmd0cyMVAaSTzVsQVxzy2Y8",

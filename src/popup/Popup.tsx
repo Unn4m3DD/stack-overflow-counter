@@ -9,7 +9,7 @@ import Counter from './Pages/Counter';
 import History from './Pages/History';
 
 const Popup: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<"counter" | "history" | "friends">("history")
+  const [currentPage, setCurrentPage] = useState<"counter" | "history" | "friends">("friends")
 
   const [visits, setVisits] = useState<Visits>([]);
   chrome.storage.sync.get("visits", ({ visits }) => {
