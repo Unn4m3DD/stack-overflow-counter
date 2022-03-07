@@ -6,5 +6,10 @@
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
     "default_popup": "popup.html"
-  }
+  },
+  "content_scripts": [{
+    "matches": ["https://*.stackoverflow.com/*"],
+    "js": ["on-stack-overflow-visit.js"]
+
+  }]
 }
