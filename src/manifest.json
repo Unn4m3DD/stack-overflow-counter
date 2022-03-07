@@ -5,11 +5,11 @@
   "manifest_version": 3,
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "content_scripts": [{
     "matches": ["https://*.stackoverflow.com/*"],
-    "js": ["on-stack-overflow-visit.js"]
+    "js": ["background.js"]
 
   }]
 }
