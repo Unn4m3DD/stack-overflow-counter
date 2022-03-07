@@ -1,0 +1,10 @@
+{
+  "name": "How many times have I used stack overflow",
+  "description": "Counts the number of times you used stack overflow over the day and lets you compare it with your friends",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
