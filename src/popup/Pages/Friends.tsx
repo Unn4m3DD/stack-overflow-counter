@@ -7,13 +7,6 @@ import { faClipboard, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const Friends: React.FC = () => {
-  const loginContainer = useRef<HTMLDivElement>(null)
-  const [friendStats, setFriendStats] = React.useState<Friend[]>()
-  useEffect(() => {
-    // chrome.runtime.sendMessage("getFriendsStats", (newFriendStats) => {
-    //   setFriendStats(newFriendStats)
-    // })
-  }, [])
   const [copied, setCopied] = useState(false)
   const [newId, setNewId] = useState("")
   return <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "100%" }}>

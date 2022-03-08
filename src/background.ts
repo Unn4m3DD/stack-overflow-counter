@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { Friend } from "./types";
 import { auth, db } from './firebase-config';
 
-const getTodayTimestamp = () => {
+export const getTodayTimestamp = () => {
   return new Date(new Date().toDateString()).getTime()
 }
 
@@ -33,18 +33,7 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-chrome.runtime.onMessage.addListener(
-  async (request, sender, sendResponse) => {
-    if (request === "getFriendStats") {
-      if (!auth.currentUser) return
-      const friendList: string[] = await (await getDoc(doc(db, "users", auth.currentUser.uid))).data().friends
-      const newFriends: Friend[] = []
-      for (let friendId of friendList)
-        newFriends.push((await getDoc(doc(db, "users", friendId))).data() as Friend)
-      sendResponse(newFriends)
-    }
-  }
-);
+
 chrome.runtime.onMessage.addListener(
   async ({ addNewFriend }, sender, sendResponse) => {
     if (addNewFriend) {
