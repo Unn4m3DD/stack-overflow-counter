@@ -1,4 +1,5 @@
-export type Visits = Array<{
-  url: string,
-  timestamp: Date
-}>
+export interface Friend {
+  name: string,
+  image: string,
+  visitCount: number
+}

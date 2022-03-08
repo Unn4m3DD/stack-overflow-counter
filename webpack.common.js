@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: { popup: './src/popup/index.tsx', background: './src/background/on-stack-overflow-visit.ts' },
+  entry: { popup: './src/popup/index.tsx', "on-stack-overflow-visit": './src/background/on-stack-overflow-visit.ts', "background": './src/background.ts' },
   module: {
     rules: [
       {

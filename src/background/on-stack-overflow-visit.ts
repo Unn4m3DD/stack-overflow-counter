@@ -1,12 +1,7 @@
 
-
-chrome.storage.sync.get("visits", ({ visits }) => {
-  if(!visits) visits = []
-  visits.push({
-    url: window.location.href,
-    timestamp: new Date()
-  })
+chrome.storage.sync.get("visitCount", ({ visitCount }) => {
+  chrome.runtime.sendMessage({ incrementVisitCount: true });
   chrome.storage.sync.set({
-    visits
+    visitCount: visitCount + 1
   })
 });

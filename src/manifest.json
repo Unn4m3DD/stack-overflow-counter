@@ -3,8 +3,10 @@
   "description": "Counts the number of times you used stack overflow over the day and lets you compare it with your friends",
   "version": "1.0",
   "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs5CgGqnnjJxWVneJ1VKsrLE2WvxLqQZfU0NeGArwcxC952wLafvsFUaol11QJqlZWYcPU/99Sa11CXc2z0JMmZZRWkZJpNC4XDlMkR/7gpJ/KnLEJUyUG+W+6LKLQpfwBhCDCFXH+OWhmnpWR29t2FPIRIvJom2ejyemkfjPPLsM79IN+gjj6rmVxMb2GmLlTbzMkvNhBdrKlRtsUCFIKkruS3/SJgNj8KRuRRUun0QazWCIiLuT3aPk837cKt1981y8/94OALJx/pg9oHZNpumiZn9mT6Cu442XIdVmFlFszqK+/Ywq0sgUEgjHe4FTov+aOJxfBVhk/7xyBT/+gwIDAQAB",
   "permissions": [
     "identity",
+    "identity.email",
     "storage",
     "activeTab",
     "scripting"
@@ -12,18 +14,29 @@
   "action": {
     "default_popup": "index.html"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
         "https://*.stackoverflow.com/*"
       ],
       "js": [
-        "background.js"
+        "on-stack-overflow-visit.js"
       ]
     }
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "oauth2": {
     "client_id": "302087736467-4rneipa4066n7t75c49m0lp19pp75j2g.apps.googleusercontent.com",
-    "scopes":["https://www.googleapis.com/auth/userinfo.email"]
+    "scopes": [
+      "profile",
+      "email",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
   }
 }
