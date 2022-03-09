@@ -4,20 +4,28 @@ import { faArrowsRotate, faChartBar, faChartColumn, faUser } from '@fortawesome/
 
 import Friends from './Pages/Friends';
 import Counter from './Pages/Counter';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Button } from '@mui/material';
 import Ranking from './Pages/Ranking';
 import { auth } from '../firebase-config';
 import { login } from '../background';
 const Popup: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
 
-  if (!auth.currentUser) login()
-
   return <div style={{ height: "20rem", width: "20rem", display: "flex", flexDirection: "column" }}>
     <div style={{ height: "16rem", width: "20rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {currentPage === 0 && <Counter />}
-      {currentPage === 1 && <Ranking />}
-      {currentPage === 2 && <Friends />}
+      {
+        auth.currentUser && <>
+          {currentPage === 0 && <Counter />}
+          {currentPage === 1 && <Ranking />}
+          {currentPage === 2 && <Friends />}
+        </>
+      }
+      {!auth.currentUser && <Button
+        onClick={() => { login(true) }}
+        variant="outlined"
+      >
+        Log in
+      </Button>}
     </div>
     <BottomNavigation
       showLabels
