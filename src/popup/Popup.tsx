@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsRotate, faChartBar, faChartColumn, faUser } from '@fortawesome/free-solid-svg-icons'
 
@@ -10,7 +10,12 @@ import { auth } from '../firebase-config';
 import { login } from '../background';
 const Popup: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
-
+  const [_, forceUpdate] = useState(0)
+  useEffect(() => {
+    auth.onAuthStateChanged(({ }) => {
+      forceUpdate(1)
+    })
+  })
   return <div style={{ height: "20rem", width: "20rem", display: "flex", flexDirection: "column" }}>
     <div style={{ height: "16rem", width: "20rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
       {

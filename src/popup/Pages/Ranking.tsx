@@ -18,7 +18,7 @@ const Ranking: React.FC = () => {
       const newFriends: Friend[] = []
       for (let friendId of friendList)
         newFriends.push({ uid: friendId, ...(await getDoc(doc(db, "users", friendId))).data() } as Friend)
-      newFriends.sort((a, b) => a.visits[getTodayTimestamp()] - b.visits[getTodayTimestamp()])
+      newFriends.sort((a, b) => b.visits?.[getTodayTimestamp()] ?? 0 - a.visits?.[getTodayTimestamp()] ?? 0)
       setFriendStats(newFriends)
     }
     getNewFriendStats()
@@ -26,7 +26,7 @@ const Ranking: React.FC = () => {
   return <div style={{ height: "100%", width: "100%", display: "flex" }}>
     {friendStats && <DataGrid
       rows={friendStats.map((e) => ({
-        id: e.uid, ...e, visits: e.visits[getTodayTimestamp()]
+        id: e.uid, ...e, visits: e.visits?.[getTodayTimestamp()] ?? 0
       }))}
       columns={
         [
