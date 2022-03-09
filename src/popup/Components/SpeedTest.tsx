@@ -22,7 +22,8 @@ const SpeedTest: React.FC<Props> = ({ times }) => {
    C145.017,35.797,144.993,35.797,144.969,35.798z"/>
       <path id="pointer" style={{
         transform: `rotate(${rotation}deg)`,
-        transformOrigin: "145px 165px"
+        transformOrigin: "145px 165px", 
+        transition: "transform .7s ease-in-out"
       }}
         d="M224.872,80.405c-1.299,0.039-2.532,0.582-3.438,1.514l-62.701,62.701
    c-3.955-2.627-8.687-4.166-13.764-4.166c-13.748,0-25,11.252-25,25s11.252,25,25,25s25-11.252,25-25

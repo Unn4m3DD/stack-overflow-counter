@@ -20,7 +20,6 @@ const Popup: React.FC = () => {
   })
   return <div style={{ height: "20rem", width: "20rem", display: "flex", flexDirection: "column" }}>
     <div style={{ height: "16rem", width: "20rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {loading && <Counter />}
       {!loading && <>
         {
           auth.currentUser && <>
