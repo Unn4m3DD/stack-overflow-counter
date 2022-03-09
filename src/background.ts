@@ -8,15 +8,15 @@ export const getTodayTimestamp = () => {
   return new Date(new Date().toDateString()).getTime()
 }
 
-const login = () => {
+export const login = () => {
   const todayTimestamp = `${getTodayTimestamp()}`
-  chrome.identity.getAuthToken({}, async (token) => {
+  chrome.identity.getAuthToken({
+    'interactive': true
+  }, async (token) => {
     let credential = GoogleAuthProvider.credential(null, token)
-    const { user, operationType } = await signInWithCredential(auth, credential)
-    if (operationType === "link")
-      await setDoc(doc(db, "users", user.uid), { friends: [user.uid], name: user.displayName, image: user.photoURL });
-    else
-      chrome.storage.sync.set({ visitCount: (await getDoc(doc(db, "users", user.uid))).data().visits[todayTimestamp] })
+    const { user } = await signInWithCredential(auth, credential)
+    await setDoc(doc(db, "users", user.uid), { friends: [user.uid], name: user.displayName, image: user.photoURL });
+    chrome.storage.sync.set({ visitCount: (await getDoc(doc(db, "users", user.uid))).data().visits?.[todayTimestamp] ?? 0 })
   })
 }
 
