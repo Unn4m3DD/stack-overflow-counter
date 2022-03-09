@@ -16,9 +16,10 @@ export const login = (interactive?: boolean) => {
     try {
       let credential = GoogleAuthProvider.credential(null, token)
       const { user } = await signInWithCredential(auth, credential)
-      await setDoc(doc(db, "users", user.uid), { friends: [user.uid], name: user.displayName, image: user.photoURL });
+      if (!(await getDoc(doc(db, "users", user.uid))).exists())
+        await setDoc(doc(db, "users", user.uid), { friends: [], name: user.displayName, image: user.photoURL, visits: { [todayTimestamp]: 0 } });
       chrome.storage.sync.set({ visitCount: (await getDoc(doc(db, "users", user.uid))).data().visits?.[todayTimestamp] ?? 0 })
-    } catch { }
+    } catch (e) { console.error(e) }
   })
 }
 
@@ -30,7 +31,7 @@ chrome.runtime.onMessage.addListener(
   ({ incrementVisitCount }, sender, sendResponse) => {
     if (incrementVisitCount)
       updateDoc(doc(db, "users", auth.currentUser.uid), {
-        [`visits.${getTodayTimestamp()}`]: increment(1)
+        [`visits.${getTodayTimestamp()}`]: incrementVisitCount
       })
   }
 );

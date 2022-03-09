@@ -11,26 +11,31 @@ import { login } from '../background';
 const Popup: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [_, forceUpdate] = useState(0)
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
+    setTimeout(() => setLoading(false), 300)
     auth.onAuthStateChanged(({ }) => {
-      forceUpdate(1)
+      setLoading(false)
     })
   })
   return <div style={{ height: "20rem", width: "20rem", display: "flex", flexDirection: "column" }}>
     <div style={{ height: "16rem", width: "20rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      {
-        auth.currentUser && <>
-          {currentPage === 0 && <Counter />}
-          {currentPage === 1 && <Ranking />}
-          {currentPage === 2 && <Friends />}
-        </>
-      }
-      {!auth.currentUser && <Button
-        onClick={() => { login(true) }}
-        variant="outlined"
-      >
-        Log in
-      </Button>}
+      {loading && <Counter />}
+      {!loading && <>
+        {
+          auth.currentUser && <>
+            {currentPage === 0 && <Counter />}
+            {currentPage === 1 && <Ranking />}
+            {currentPage === 2 && <Friends />}
+          </>
+        }
+        {!auth.currentUser && <Button
+          onClick={() => { login(true) }}
+          variant="outlined"
+        >
+          Log in
+        </Button>}
+      </>}
     </div>
     <BottomNavigation
       showLabels

@@ -8,14 +8,16 @@ import { faClipboard, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Friends: React.FC = () => {
   const [copied, setCopied] = useState(false)
+  const [added, setAdded] = useState(false)
   const [newId, setNewId] = useState("")
   return <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", height: "100%" }}>
     <h3>Add a friend</h3>
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <TextField value={newId} onChange={(e) => setNewId(e.target.value)} style={{ marginRight: 5 }} label="Friend ID" variant="outlined" />
+      <TextField value={newId} onChange={(e) => setNewId(e.target.value)} style={{ marginRight: 5, width: "100%" }} label="Friend ID" variant="outlined" />
       <Button variant="contained"
         onClick={() => {
           chrome.runtime.sendMessage({ addNewFriend: newId })
+          setAdded(true)
         }}
       ><FontAwesomeIcon icon={faPlus} fontSize={19} /></Button>
     </div>
@@ -32,6 +34,12 @@ const Friends: React.FC = () => {
       autoHideDuration={3000}
       onClose={() => setCopied(false)}
       message="ID copied to clipboard"
+    />
+    <Snackbar
+      open={added}
+      autoHideDuration={3000}
+      onClose={() => setAdded(false)}
+      message="Friend Added"
     />
   </div >
 }
