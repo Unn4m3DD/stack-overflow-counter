@@ -4,22 +4,30 @@ import { faArrowsRotate, faChartBar, faChartColumn, faUser } from '@fortawesome/
 
 import Friends from './Pages/Friends';
 import Counter from './Pages/Counter';
-import { BottomNavigation, BottomNavigationAction, Button } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Button, CircularProgress } from '@mui/material';
 import Ranking from './Pages/Ranking';
 import { auth } from '../firebase-config';
 import { login } from '../background';
 const Popup: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [_, forceUpdate] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setTimeout(() => setLoading(false), 300)
-    auth.onAuthStateChanged(({ }) => {
+    const asyncLogin = async () => {
+      await login()
       setLoading(false)
+    }
+    asyncLogin()
+  }, [])
+  useEffect(() => {
+    chrome.storage.sync.get("loggedIn", ({ loggedIn }) => {
+      if (!loggedIn)
+        setLoading(false)
     })
-  })
+  }, [])
   return <div style={{ height: "20rem", width: "20rem", display: "flex", flexDirection: "column" }}>
     <div style={{ height: "16rem", width: "20rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      {loading && <CircularProgress />}
       {!loading && <>
         {
           auth.currentUser && <>
@@ -29,7 +37,7 @@ const Popup: React.FC = () => {
           </>
         }
         {!auth.currentUser && <Button
-          onClick={() => { login(true) }}
+          onClick={async () => { setLoading(true); await login(true); setLoading(false) }}
           variant="outlined"
         >
           Log in

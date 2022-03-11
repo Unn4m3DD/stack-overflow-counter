@@ -6,6 +6,7 @@ import { Friend } from '../../types';
 import { DataGrid } from '@mui/x-data-grid';
 
 import './styles.scss';
+import { CircularProgress } from '@mui/material';
 
 const Ranking: React.FC = () => {
   const [friendStats, setFriendStats] = React.useState<Friend[]>()
@@ -23,7 +24,8 @@ const Ranking: React.FC = () => {
     }
     getNewFriendStats()
   }, [auth.currentUser])
-  return <div style={{ height: "100%", width: "100%", display: "flex" }}>
+  return <div style={{ height: "100%", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    {!friendStats && <CircularProgress />}
     {friendStats && <DataGrid
       rows={friendStats.map((e) => ({
         id: e.uid, ...e, visits: e.visits?.[getTodayTimestamp()] ?? 0
@@ -35,7 +37,7 @@ const Ranking: React.FC = () => {
           { field: 'visits', headerName: 'Visits', width: 70 },
         ]
       }
-      getRowClassName={(params) => `${params.row.id === auth.currentUser.uid ? "selected": ""}`}
+      getRowClassName={(params) => `${params.row.id === auth.currentUser.uid ? "selected" : ""}`}
       pageSize={10}
       rowsPerPageOptions={[10]}
       disableColumnFilter
