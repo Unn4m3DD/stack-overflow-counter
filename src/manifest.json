@@ -8,8 +8,7 @@
     "identity",
     "identity.email",
     "storage",
-    "activeTab",
-    "scripting"
+    "activeTab"
   ],
   "action": {
     "default_popup": "index.html"
